@@ -211,7 +211,7 @@ By default there is no visualization for batch retargeting.
 Retarget a single motion:
 ```bash
 # single motion
-python scripts/bvh_to_robot.py --bvh_file /home/ubuntu/il/GMR/data/lafan1 --robot <path_to_robot_data> --save_path /home/ubuntu/il/GMR/output --rate_limit
+python scripts/bvh_to_robot.py --bvh_file /home/ubuntu/deep_robotics/GMR/data/lafan1 --robot <path_to_robot_data> --save_path /home/ubuntu/deep_robotics/GMR/output --rate_limit
 ```
 By default you should see the visualization of the retargeted robot motion in a mujoco window. 
 - `--rate_limit` is used to limit the rate of the retargeted robot motion to keep the same as the human motion. If you want it as fast as possible, remove `--rate_limit`.
@@ -219,9 +219,10 @@ By default you should see the visualization of the retargeted robot motion in a 
 
 Retarget a folder of motions:
 ```bash
-python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/il/GMR/lafan1 --tgt_folder /home/ubuntu/il/GMR/output --robot unitree_g1
+python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/deep_robotics/GMR/lafan1 --tgt_folder /home/ubuntu/deep_robotics/GMR/output/g1_output --robot unitree_g1
 
-python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/il/GMR/data/lafan1 --tgt_folder /home/ubuntu/il/GMR/output --robot CR1
+python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/deep_robotics/GMR/data/lafan1 --tgt_folder /home/ubuntu/deep_robotics/GMR/output/cr1_output --robot CR1
+python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/deep_robotics/GMR/data/motion_capture --tgt_folder /home/ubuntu/deep_robotics/GMR/output/cr1_output --robot CR1
 ```
 By default there is no visualization for batch retargeting.
 
@@ -268,8 +269,8 @@ You should see the visualization of the retargeted robot motion in a mujoco wind
 python scripts/vis_robot_motion.py --robot <robot_name> --robot_motion_path <path_to_save_robot_data.pkl>
 ```
 ```bash
-python scripts/vis_robot_motion.py --robot CR1 --robot_motion_path /home/ubuntu/il/GMR/output/cr1_output/aiming1_subject1.pkl
-python scripts/vis_robot_motion.py --robot unitree_g1 --robot_motion_path /home/ubuntu/il/GMR/output/g1_output/aiming1_subject1.pkl
+python scripts/vis_robot_motion.py --robot CR1 --robot_motion_path /home/ubuntu/deep_robotics/GMR/output/cr1_output/aiming1_subject1.pkl
+python scripts/vis_robot_motion.py --robot unitree_g1 --robot_motion_path /home/ubuntu/deep_robotics/GMR/output/g1_output/aiming1_subject1.pkl
 ```
 If you want to record video, add `--record_video` and `--video_path <your_video_path,mp4>`.
 
