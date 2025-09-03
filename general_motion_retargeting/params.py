@@ -6,6 +6,7 @@ ASSET_ROOT = HERE / ".." / "assets"
 
 ROBOT_XML_DICT = {
     "unitree_g1": ASSET_ROOT / "unitree_g1" / "g1_mocap_29dof.xml",
+    "CR1": ASSET_ROOT / "CR1" / "CR1.xml",
     "unitree_g1_with_hands": ASSET_ROOT / "unitree_g1" / "g1_mocap_29dof_with_hands.xml",
     "unitree_h1": ASSET_ROOT / "unitree_h1" / "h1.xml",
     "unitree_h1_2": ASSET_ROOT / "unitree_h1_2" / "h1_2_handless.xml",
@@ -19,7 +20,7 @@ ROBOT_XML_DICT = {
     "galaxea_r1pro": ASSET_ROOT / "galaxea_r1pro" / "r1_pro.xml",
     "berkeley_humanoid_lite": ASSET_ROOT / "berkeley_humanoid_lite" / "bhl_scene.xml",
     "booster_k1": ASSET_ROOT / "booster_k1" / "K1_serial.xml",
-    "pnd_adam_lite": ASSET_ROOT / "pnd_adam_lite" / "scene.xml",
+    "pnd_adam_lite": ASSET_ROOT / "pnd_adam_lite" / "adam_lite.xml",
 }
 
 IK_CONFIG_DICT = {
@@ -43,6 +44,7 @@ IK_CONFIG_DICT = {
     },
     "bvh":{
         "unitree_g1": IK_CONFIG_ROOT / "bvh_to_g1.json",
+        "CR1": IK_CONFIG_ROOT / "bvh_to_cr1.json",
         "unitree_g1_with_hands": IK_CONFIG_ROOT / "bvh_to_g1.json",
         "booster_t1_29dof": IK_CONFIG_ROOT / "bvh_to_t1_29dof.json",
         "fourier_n1": IK_CONFIG_ROOT / "bvh_to_n1.json",
@@ -61,6 +63,7 @@ IK_CONFIG_DICT = {
 
 ROBOT_BASE_DICT = {
     "unitree_g1": "pelvis",
+    "CR1": "base_link",
     "unitree_g1_with_hands": "pelvis",
     "unitree_h1": "pelvis",
     "unitree_h1_2": "pelvis",
@@ -79,6 +82,7 @@ ROBOT_BASE_DICT = {
 
 VIEWER_CAM_DISTANCE_DICT = {
     "unitree_g1": 2.0,
+    "CR1": 3.0,
     "unitree_g1_with_hands": 2.0,
     "unitree_h1": 3.0,
     "unitree_h1_2": 3.0,
@@ -92,5 +96,5 @@ VIEWER_CAM_DISTANCE_DICT = {
     "galaxea_r1pro": 3.0,
     "berkeley_humanoid_lite": 2.0,
     "booster_k1": 2.0,
-    "pnd_adam_lite": 3.0,
+    "pnd_adam_lite": 2.0,
 }

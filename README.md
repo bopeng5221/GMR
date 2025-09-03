@@ -37,7 +37,7 @@ Starting from its release, GMR is massively used by the community. See below for
 
 
 # News & Updates
-- 2025-08-30: GMR now supports [Unitree H1 2](https://www.unitree.com/cn/h1) and [PND Adam Lite](https://pndbotics.com/), the 12th and 13th humanoid robots in the repo.
+- 2025-08-30: GMR now supports [Unitree H1 2](https://www.unitree.com/cn/h1), the 12th humanoid robot in the repo.
 - 2025-08-28: GMR now supports [Booster T1](https://www.boosterobotics.com/) for both 23dof and 29dof.
 - 2025-08-28: GMR now supports using exported offline FBX motion data from [OptiTrack](https://www.optitrack.com/). 
 - 2025-08-27: GMR now supports [Berkeley Humanoid Lite](https://github.com/HybridRobotics/Berkeley-Humanoid-Lite-Assets), the 11th humanoid robot in the repo.
@@ -106,12 +106,6 @@ Demo 8: Unitree H1 2 doing some jumping
 https://github.com/user-attachments/assets/2382d8ce-7902-432f-ab45-348a11eeb312
 
 
-Demo 9: PND Adam lite
-
-
-https://github.com/user-attachments/assets/a8ef1409-88f1-4393-9cd0-d2b14216d2a4
-
-
 # Supported Robots and Data Formats
 
 | Assigned ID | Robot/Data Format | Robot DoF | SMPLX ([AMASS](https://amass.is.tue.mpg.de/), [OMOMO](https://github.com/lijiaman/omomo_release)) | BVH ( [LAFAN1](https://github.com/ubisoft/ubisoft-laforge-animation-dataset)) | FBX ([OptiTrack](https://www.optitrack.com/)) | More formats coming soon | 
@@ -130,10 +124,10 @@ https://github.com/user-attachments/assets/a8ef1409-88f1-4393-9cd0-d2b14216d2a4
 | 11 | Galaxea R1 Pro `galaxea_r1pro` (this is a wheeled robot!) |  Base (6) + Torso (4) + Arm (2*7) = 24 | ✅ | TBD | TBD |
 | 12 | Kuavo `kuavo_s45` |  Head (2) + Arm (2\*7) + Leg (2\*6) = 28 | ✅ | TBD | TBD |
 | 13 | Berkeley Humanoid Lite `berkeley_humanoid_lite` (need further tuning) | Leg (2\*6) + Arm (2\*5) = 22 | ✅ | TBD | TBD |
-| 14 | PND Adam Lite `pnd_adam_lite`  | Leg (2\*6) + Waist (3) + Arm (2\*5) = 25 | ✅ | TBD | TBD |
 | More robots coming soon ! |
-| 15 | AgiBot A2 `agibot_a2` | TBD | TBD | TBD | TBD |
-| 16 | OpenLoong `openloong` | TBD | TBD | TBD | TBD |
+| 14 | AgiBot A2 `agibot_a2` | TBD | TBD | TBD | TBD |
+| 15 | OpenLoong `openloong` | TBD | TBD | TBD | TBD |
+| 16 | PND Adam Lite `pnd_adam_lite` (have bugs in mujoco file loading) | Leg (2\*6) + Waist (3) + Arm (2\*5) = 25 | TBD | TBD | TBD |
 
 
 
@@ -217,7 +211,7 @@ By default there is no visualization for batch retargeting.
 Retarget a single motion:
 ```bash
 # single motion
-python scripts/bvh_to_robot.py --bvh_file <path_to_bvh_data> --robot <path_to_robot_data> --save_path <path_to_save_robot_data.pkl> --rate_limit
+python scripts/bvh_to_robot.py --bvh_file /home/ubuntu/il/GMR/data/lafan1 --robot <path_to_robot_data> --save_path /home/ubuntu/il/GMR/output --rate_limit
 ```
 By default you should see the visualization of the retargeted robot motion in a mujoco window. 
 - `--rate_limit` is used to limit the rate of the retargeted robot motion to keep the same as the human motion. If you want it as fast as possible, remove `--rate_limit`.
@@ -225,7 +219,9 @@ By default you should see the visualization of the retargeted robot motion in a 
 
 Retarget a folder of motions:
 ```bash
-python scripts/bvh_to_robot_dataset.py --src_folder <path_to_dir_of_bvh_data> --tgt_folder <path_to_dir_to_save_robot_data> --robot <robot_name>
+python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/il/GMR/lafan1 --tgt_folder /home/ubuntu/il/GMR/output --robot unitree_g1
+
+python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/il/GMR/data/lafan1 --tgt_folder /home/ubuntu/il/GMR/output --robot CR1
 ```
 By default there is no visualization for batch retargeting.
 
@@ -270,6 +266,10 @@ You should see the visualization of the retargeted robot motion in a mujoco wind
 ## Visualize saved robot motion
 ```bash
 python scripts/vis_robot_motion.py --robot <robot_name> --robot_motion_path <path_to_save_robot_data.pkl>
+```
+```bash
+python scripts/vis_robot_motion.py --robot CR1 --robot_motion_path /home/ubuntu/il/GMR/output/cr1_output/aiming1_subject1.pkl
+python scripts/vis_robot_motion.py --robot unitree_g1 --robot_motion_path /home/ubuntu/il/GMR/output/g1_output/aiming1_subject1.pkl
 ```
 If you want to record video, add `--record_video` and `--video_path <your_video_path,mp4>`.
 
