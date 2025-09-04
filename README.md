@@ -219,7 +219,7 @@ By default you should see the visualization of the retargeted robot motion in a 
 
 Retarget a folder of motions:
 ```bash
-python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/deep_robotics/GMR/lafan1 --tgt_folder /home/ubuntu/deep_robotics/GMR/output/g1_output --robot unitree_g1
+python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/deep_robotics/GMR/data/lafan1 --tgt_folder /home/ubuntu/deep_robotics/GMR/output/g1_output_test --robot unitree_g1
 
 python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/deep_robotics/GMR/data/lafan1 --tgt_folder /home/ubuntu/deep_robotics/GMR/output/cr1_output --robot CR1
 python scripts/bvh_to_robot_dataset.py --src_folder /home/ubuntu/deep_robotics/GMR/data/motion_capture --tgt_folder /home/ubuntu/deep_robotics/GMR/output/cr1_output --robot CR1

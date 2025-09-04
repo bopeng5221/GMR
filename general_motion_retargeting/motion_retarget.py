@@ -2,6 +2,7 @@
 import mink
 import mujoco as mj
 import numpy as np
+import matplotlib.pyplot as plt
 import json
 from scipy.spatial.transform import Rotation as R
 from .params import ROBOT_XML_DICT, IK_CONFIG_DICT
@@ -157,6 +158,101 @@ class GeneralMotionRetargeting:
             human_data = self.offset_human_data_to_ground(human_data)
         self.scaled_human_data = human_data
 
+        # # Visualize the scaled human data
+        # fig = plt.figure()
+        # ax = fig.add_subplot(111, projection='3d')
+
+        # # Define skeleton hierarchy (parent-child relationships)
+        # hierarchy = [
+        #     ('Hips', 'Spine2'),
+        #     ('Hips', 'LeftUpLeg'),
+        #     ('LeftUpLeg', 'LeftLeg'),
+        #     ('LeftLeg', 'LeftFootMod'),
+        #     ('Hips', 'RightUpLeg'),
+        #     ('RightUpLeg', 'RightLeg'),
+        #     ('RightLeg', 'RightFootMod'),
+        #     ('Spine2', 'LeftArm'),
+        #     ('LeftArm', 'LeftForeArm'),
+        #     ('LeftForeArm', 'LeftHand'),
+        #     ('Spine2', 'RightArm'),
+        #     ('RightArm', 'RightForeArm'),
+        #     ('RightForeArm', 'RightHand')
+        # ]
+
+        # # Plot joints as scatter points
+        # for joint_name, data in self.scaled_human_data.items():
+        #     position = data[0]  # Extract position array
+        #     ax.scatter(position[0], position[1], position[2], label=joint_name)
+
+        #     # Plot local coordinate axes (red for X, green for Y, blue for Z)
+        #     quaternion = data[1]  # Extract quaternion [x, y, z, w]
+        #     rot_matrix = self.quaternion_to_rotation_matrix(quaternion)
+            
+        #     # Define axis length for visualization
+        #     axis_length = 0.1  # Small length for axes
+        #     origin = position
+        #     x_axis = rot_matrix @ np.array([axis_length, 0, 0])
+        #     y_axis = rot_matrix @ np.array([0, axis_length, 0])
+        #     z_axis = rot_matrix @ np.array([0, 0, axis_length])
+
+        #     # Plot X axis (red)
+        #     ax.plot(
+        #         [origin[0], origin[0] + x_axis[0]],
+        #         [origin[1], origin[1] + x_axis[1]],
+        #         [origin[2], origin[2] + x_axis[2]],
+        #         'r-'
+        #     )
+        #     # Plot Y axis (green)
+        #     ax.plot(
+        #         [origin[0], origin[0] + y_axis[0]],
+        #         [origin[1], origin[1] + y_axis[1]],
+        #         [origin[2], origin[2] + y_axis[2]],
+        #         'g-'
+        #     )
+        #     # Plot Z axis (blue)
+        #     ax.plot(
+        #         [origin[0], origin[0] + z_axis[0]],
+        #         [origin[1], origin[1] + z_axis[1]],
+        #         [origin[2], origin[2] + z_axis[2]],
+        #         'b-'
+        #     )
+
+        # # Plot bones as lines
+        # for parent, child in hierarchy:
+        #     if parent in self.scaled_human_data and child in self.scaled_human_data:
+        #         parent_pos = self.scaled_human_data[parent][0]
+        #         child_pos = self.scaled_human_data[child][0]
+        #         ax.plot(
+        #             [parent_pos[0], child_pos[0]],
+        #             [parent_pos[1], child_pos[1]],
+        #             [parent_pos[2], child_pos[2]],
+        #             'k-'  # Black lines for bones
+        #         )
+
+        # # Set labels and title
+        # ax.set_xlabel('X')
+        # ax.set_ylabel('Y')
+        # ax.set_zlabel('Z')
+        # ax.set_title('3D Skeleton Visualization with Local Coordinate Axes')
+        # # ax.legend()
+
+        # # Equalize axes for better visualization
+        # max_range = np.array([
+        #     max([self.scaled_human_data[j][0][i] for j in self.scaled_human_data]) -
+        #     min([self.scaled_human_data[j][0][i] for j in self.scaled_human_data])
+        #     for i in range(3)
+        # ]).max() / 2.0
+        # mid_x = (max([self.scaled_human_data[j][0][0] for j in self.scaled_human_data]) +
+        #         min([self.scaled_human_data[j][0][0] for j in self.scaled_human_data])) / 2
+        # mid_y = (max([self.scaled_human_data[j][0][1] for j in self.scaled_human_data]) +
+        #         min([self.scaled_human_data[j][0][1] for j in self.scaled_human_data])) / 2
+        # mid_z = (max([self.scaled_human_data[j][0][2] for j in self.scaled_human_data]) +
+        #         min([self.scaled_human_data[j][0][2] for j in self.scaled_human_data])) / 2
+        # ax.set_xlim(mid_x - max_range, mid_x + max_range)
+        # ax.set_ylim(mid_y - max_range, mid_y + max_range)
+        # ax.set_zlim(mid_z - max_range, mid_z + max_range)
+
+        # plt.show()
         if self.use_ik_match_table1:
             for body_name in self.human_body_to_task1.keys():
                 task = self.human_body_to_task1[body_name]
@@ -311,3 +407,12 @@ class GeneralMotionRetargeting:
             pos, quat = human_data[body_name]
             human_data[body_name][0] = pos - np.array([0, 0, self.ground_offset])
         return human_data
+    
+    def quaternion_to_rotation_matrix(self, q):
+        """Convert quaternion [x, y, z, w] to 3x3 rotation matrix."""
+        x, y, z, w = q
+        return np.array([
+            [1 - 2*y*y - 2*z*z, 2*x*y - 2*z*w, 2*x*z + 2*y*w],
+            [2*x*y + 2*z*w, 1 - 2*x*x - 2*z*z, 2*y*z - 2*x*w],
+            [2*x*z - 2*y*w, 2*y*z + 2*x*w, 1 - 2*x*x - 2*y*y]
+        ])
